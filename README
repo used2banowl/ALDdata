@@ -1,5 +1,6 @@
 1.2.0
   - Added variant allele frequency for all SNPs in YRI, CEU, CHB and JPT
+  - Added ALDdata to github
 
 1.1.1
   - Fixed minor data bugs
