@@ -1,0 +1,9 @@
+Package: ALDdata
+Version: 1.2.0
+Date: 2013-11-14
+Title: ALDdata
+Author: Randall Johnson <rjohnson@ncifcrf.gov>
+Maintainer: Randy Johnson <rjohnson@ncifcrf.gov>
+Depends: R (>= 3.0)
+Description: Data for use in analysis of Admixture Linkage Disequilibrium
+License: GPL (>= 2.0)
