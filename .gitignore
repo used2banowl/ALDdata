@@ -1,0 +1,7 @@
+*~
+*.tar.gz
+Data/
+old/
+.Rhistory
+Icon*
+tmp.*
