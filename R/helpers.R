@@ -6,17 +6,17 @@
 # Created August 28, 2013
 # Last Modified October 31, 2013
 
-get.phased <- function(chr, pop, clean.duos = FALSE)
+get.phased <- function(chr, pop, clean.duos = FALSE, dataDir = '../Data/')
 {
     # read in and merge phased data (some individuals did not pass QC,
     #                                hence those that were duos or unrelated)
 
     # trios
-    phased1 <- try(read.table(paste('../data/',toupper(pop), '/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.chr',
+    phased1 <- try(read.table(paste(dataDir, toupper(pop), '/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.chr',
                                     chr, '_', tolower(pop), '.unr.phased', sep = ''),
                               header = TRUE, stringsAsFactors = FALSE, na.strings = '-'))
     # duos
-    phased2 <- try(read.table(paste('../data/',toupper(pop), '/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.chr',
+    phased2 <- try(read.table(paste(dataDir, toupper(pop), '/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.chr',
                                     chr, '_', tolower(pop), '.D.phased', sep = ''),
                               header = TRUE, stringsAsFactors = FALSE, na.strings = '-'))
     if(class(phased2) == 'data.frame' & clean.duos)
@@ -27,7 +27,7 @@ get.phased <- function(chr, pop, clean.duos = FALSE)
             phased2 <- phased2[,-todrop]
     }
     # unrelated
-    phased3 <- try(read.table(paste('../data/',toupper(pop), '/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.chr',
+    phased3 <- try(read.table(paste(dataDir, toupper(pop), '/phased/hapmap3_r2_b36_fwd.consensus.qc.poly.chr',
                                     chr, '_', tolower(pop), '.phased', sep = ''),
                               header = TRUE, stringsAsFactors = FALSE, na.strings = '-'))
 
@@ -99,7 +99,7 @@ get.phased <- function(chr, pop, clean.duos = FALSE)
 get.LD <- function(chr, pop, keep)
 {
     # read in LD data
-    LD <- read.table(paste('../data/', toupper(pop), '/LD/ld_chr', chr, '_', toupper(pop), '.txt', sep = ''),
+    LD <- read.table(paste(dataDir, toupper(pop), '/LD/ld_chr', chr, '_', toupper(pop), '.txt', sep = ''),
                      stringsAsFactors = FALSE)
     names(LD) <- c('pos1', 'pos2', 'pop', 'rs1', 'rs2', 'Dprime', 'r2', 'lod', 'fbin')
 
