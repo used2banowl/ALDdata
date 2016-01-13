@@ -1,10 +1,7 @@
 # hapmap.R
 # Creation of hapmap datasets for use in mald package
 # Randall Johnson
-# BSP CCR Genetics Core at Frederick National Laboratory
-# SAIC-Frederick, Inc
-# Created August 26, 2013
-# Last Modified November 14, 2013
+# Leidos Biomedical Research, Inc
 
 
 library(ALDsuite)
@@ -20,6 +17,8 @@ ceu <- list()
 yri <- list()
 jpt <- list()
 chb <- list()
+
+asw <- list()
 
 # for the final map
 rs <- character()
@@ -82,6 +81,51 @@ for(i in 1:23)
 
     save(phased, LD, file = paste('../data/YRI/bin/yri', i, '.RData', sep = ''))
     f.yri <- c(f.yri, apply(phased, 2, mean))
+
+
+    ### ASW ###
+    if(i == 20)
+    {
+        phased <- get.phased(chr = i, pop = 'ASW')
+
+        # get rid of unnecessary information
+        phased$rsID <- NULL
+        phased$position_b36 <- NULL
+        phased$phys_position <- NULL
+        rownames(phased) <- rs.tmp
+
+        # find any variant alleles that don't exist in YRI (because there are no hets)
+        to.check <- which(is.na(var.tmp))
+        if(length(tabs) > 0)
+        {
+            tabs <- apply(phased[to.check,], 1, table)
+
+            for(j in 1:length(to.check))
+            {
+                if(any(names(tabs[[j]]) != ref.tmp[to.check[j]]))
+                    var.tmp[to.check[j]] <- names(tabs[[j]])[names(tabs[[j]]) != ref.tmp[to.check[j]]]
+            }
+        }
+
+        drop.me <- numeric()
+
+        # convert to 0/1 values
+        for(j in 1:length(phased))
+        {
+            if(i == 23 & is.na(phased[[j]][1]))
+            {
+                drop.me <- c(drop.me, j)
+            }else{
+                phased[[j]] <- as.numeric(phased[[j]] != ref.tmp)
+            }
+        }
+
+        if(i == 23 & length(drop.me) > 0)
+            phased <- subset(phased, select = (1:length(phased))[-drop.me])
+        phased <- t(phased)
+
+        save(phased, file = paste('../Data/ASW/bin/asw', i, '.RData', sep = ''))
+    }
 
 
     ### CEU ###
