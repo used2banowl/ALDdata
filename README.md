@@ -16,6 +16,9 @@ sudo R CMD ISNTALL ALDdata
 Versions
 ========
 
+1.3.0
+  - Added phased data for ASW
+
 1.2.0
   - Added variant allele frequency for all SNPs in YRI, CEU, CHB and JPT
   - Added ALDdata to github

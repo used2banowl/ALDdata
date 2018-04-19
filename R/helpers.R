@@ -118,3 +118,33 @@ get.LD <- function(chr, pop, keep)
 
     return(LD)
 }
+
+# example of importing data into ALDdata (could be coded better, but this will do)
+if(FALSE)
+{
+    library(ALDdata)
+    library(magrittr)
+    data(hapmap)
+    
+    for(i in 1:23)
+    {
+        cat("Processing chromosome", i, '\n')
+        
+        phased_raw <- get.phased(i, 'ASW')
+        
+        phased <- matrix(nrow = dim(phased_raw)[2] - 2, ncol = dim(phased_raw)[1],
+                         dimnames = list(names(phased_raw)[-(1:2)], phased_raw$rsID))
+                                   
+        tmp <- subset(hapmap, rs %in% phased_raw$rsID)
+        vart <- tmp$var
+        names(vart) <- tmp$rs
+        
+        for(j in 1:dim(phased_raw)[1])
+        {
+            phased[,phased_raw$rsID[j]] <- (phased_raw[j,-(1:2)] == vart[phased_raw$rsID[j]]) %>%
+                                           as.numeric()
+        }
+        
+        save(phased, file = paste0('../Data/ASW/bin/asw', i, '.RData'))
+    }
+}
