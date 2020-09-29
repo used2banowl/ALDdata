@@ -1,7 +1,7 @@
 ALDdata
 =======
 
-Data for use in analysis of Admixture Linkage Disequilibrium
+Data for use in analysis of Admixture Linkage Disequilibrium (see http://github.com/johnsonra/ALDdata for details).
 
 This is an R package that is suggested for use with ALDsuite
 

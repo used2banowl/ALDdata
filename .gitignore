@@ -1,7 +1,9 @@
 *~
 *.tar.gz
-Data/
+raw_data/
 old/
 .Rhistory
 Icon*
 tmp.*
+.Rproj.user
+*.Rproj
